@@ -195,9 +195,30 @@ public:
             heapify(i, 0);
         }
     }
-};
 
-int main() {
-    cout << "\033[?25l"; 
-    system("pause");
-}
+    bool is_sorted(const vector<int>& vec) {
+        for (size_t i = 1; i < vec.size(); i++) {
+            if (vec[i - 1] > vec[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void bogo_sort() {
+        cout << "\033[2J"; 
+        random_device rd;
+        mt19937 gen(rd());
+        while (!is_sorted(arr)) {
+            shuffle(arr.begin(), arr.end(), gen);
+            visualize({-1, -1, -1});
+        }
+    }
+
+    void miracle_sort() {
+        cout << "\033[2J"; 
+        while (!is_sorted(arr)) {
+            visualize({-1, -1, -1});
+        }
+    }
+};
