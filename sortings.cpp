@@ -95,6 +95,106 @@ public:
         }
         visualize({size - 2, size - 1, -1});
     }
+    
+    void merge(int left, int right, int mid) {
+        int n = mid - left + 1;
+        int m = right - mid;
+        vector<int> L(n), R(m);
+        for (int i = 0; i < n; i++) {
+            L[i] = arr[left + i];
+        }
+        for (int j = 0; j < m; j++) {
+            R[j] = arr[mid + 1 + j];
+        }
+        int i = 0, j = 0, k = left; 
+        while(i < n && j < m) {
+            if(L[i] <= R[j]) {
+                arr[k] = L[i];
+                visualize({-1, -1, k});
+                i++;
+            } else {
+                arr[k] = R[j];
+                visualize({-1, -1, k});
+                j++;
+            }
+            k++; 
+        }
+        while(i < n) {
+            arr[k] = L[i];
+            visualize({-1, -1, k});
+            i++, k++;
+        }
+        while(j < m) {
+            arr[k] = R[j];
+            visualize({-1, -1, k});
+            j++, k++;
+        }
+    }
+    void merge_sort(int left, int right) {
+        if(left < right) {
+            int mid = left + (right - left) / 2;
+            merge_sort(left, mid);
+            merge_sort(mid + 1, right);
+            merge(left, right, mid);
+            // visualize({left, right, mid});
+        }
+    }
+    void merge_sort() {
+        merge_sort(0, size - 1);
+    }
+
+    void quick_sort(int low, int high) {
+        if (low < high) {
+            int pivot = arr[high];
+            int i = low - 1;
+            for (int j = low; j < high; j++) {
+                if (arr[j] < pivot) {
+                    i++;
+                    swap(arr[i], arr[j]);
+                    visualize({i, j, -1});
+                }
+            }
+            swap(arr[i + 1], arr[high]);
+            visualize({i + 1, high, -1});
+            int pi = i + 1;
+            quick_sort(low, pi - 1);
+            quick_sort(pi + 1, high);
+        }
+    }
+    void quick_sort() {
+        quick_sort(0, size - 1);
+    }
+
+    void heapify(int n, int i) {
+        int largest = i; 
+        int left = 2 * i + 1; 
+        int right = 2 * i + 2; 
+
+        if (left < n && arr[left] > arr[largest]) {
+            largest = left;
+        }
+
+        if (right < n && arr[right] > arr[largest]) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            swap(arr[i], arr[largest]);
+            visualize({i, largest, -1});
+            heapify(n, largest);
+        }
+    }
+    void heap_sort() {
+        cout << "\033[2J"; 
+        for (int i = size / 2 - 1; i >= 0; i--) {
+            heapify(size, i);
+        }
+        for (int i = size - 1; i > 0; i--) {
+            swap(arr[0], arr[i]);
+            visualize({0, i, -1});
+            heapify(i, 0);
+        }
+    }
 };
 
 int main() {
