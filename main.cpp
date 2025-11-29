@@ -1,17 +1,3 @@
-// #include <iostream>
-// #include "sortings.cpp"
-// #include "mazes.cpp"
-
-// int main() {
-//     // Sleep(5000);
-//     // SortVisualizer sorter;
-//     // sorter.random_array(30);
-//     // sorter.merge_sort();
-//     // system("pause");
-//     MazeVisualizer x;
-//     x.generate_maze(20, 30);    
-//     system("pause");
-// }
 #include <windows.h>
 #include <iostream>
 #include "sortings.cpp"
